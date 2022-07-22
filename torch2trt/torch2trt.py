@@ -533,7 +533,7 @@ class TRTModule(torch.nn.Module):
     ):
         engine_bytes = state_dict[prefix + "engine"]
 
-        with trt.Logger() as logger, trt.Runtime(logger) as runtime:
+        with trt.Logger(min_severity = trt.Logger.INTERNAL_ERROR) as logger, trt.Runtime(logger) as runtime:
             self.engine = runtime.deserialize_cuda_engine(engine_bytes)
             self.context = self.engine.create_execution_context()
 
